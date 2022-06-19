@@ -1,0 +1,14 @@
+apiVersion: carto.run/v1alpha1
+kind: Workload
+metadata:
+  name: annotate-dev-cluster
+  namespace: default
+  labels:
+    apps.tanzu.vmware.com/workload-type: web
+    app.kubernetes.io/part-of: annotate-dev-cluster
+spec:
+  source:
+    git:
+      ref:
+        branch: main
+      url: https://github.com/sample-accelerators/python-functions-accelerator.git
