@@ -1,7 +1,7 @@
 apiVersion: metacontroller.k8s.io/v1alpha1
 kind: DecoratorController
 metadata:
-  name: annotate-tanzu-dev-ns
+  name: annotate-tap-dev-ns
 spec:
   resources:
   - apiVersion: v1
@@ -25,4 +25,4 @@ spec:
   hooks:
     sync:
       webhook:
-        url: http://decorate-namespace.dev.svc.cluster.local
+        url: http://annotate-tap-dev-ns.tap-support.svc.cluster.local

@@ -1,16 +1,17 @@
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: annotate-dev-cluster
-  description: Functions Buildpacks for Knative Accelerator Template
+  name: annotate-tap-dev-ns
+  description: Provision required secrets and roles for TAP developer namespaces
   tags:
-    - app-accelerator
     - functions
     - buildpacks
     - knative
     - tanzu
+    - system
+    - automation
   annotations:
-    'backstage.io/kubernetes-label-selector': 'app.kubernetes.io/part-of=annotate-dev-cluster'
+    'backstage.io/kubernetes-label-selector': 'app.kubernetes.io/part-of=annotate-tap-dev-ns'
 spec:
   type: service
   lifecycle: experimental
