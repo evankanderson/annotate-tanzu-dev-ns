@@ -1,0 +1,28 @@
+apiVersion: metacontroller.k8s.io/v1alpha1
+kind: DecoratorController
+metadata:
+  name: annotate-tanzu-dev-ns
+spec:
+  resources:
+  - apiVersion: v1
+    resource: namespaces
+    labelSelector:
+      matchExpressions:
+      - {key: tap.tanzu.vmware.com, operator: Exists}
+  attachments:
+  - apiVersion: v1
+    resource: secrets
+    updateStrategy:
+      method: OnDelete
+  - apiVersion: v1
+    resource: serviceaccounts
+    updateStrategy:
+      method: InPlace
+  - apiVersion: rbac.authorization.k8s.io/v1
+    resource: rolebindings
+    updateStrategy:
+      method: Recreate
+  hooks:
+    sync:
+      webhook:
+        url: http://decorate-namespace.dev.svc.cluster.local
