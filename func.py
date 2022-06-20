@@ -61,7 +61,7 @@ def decorate_namespace(req: Request) -> str: # dict[str,Any]:
     resp = json.dumps(dict(labels=dict(),
                 annotations=dict(),
                 status=None,
-                attachments=[reg_creds(ns), sa(ns),],# sa_binding(ns, "deliverable"), sa_binding(ns, "workload")],
+                attachments=[reg_creds(ns), sa(ns), sa_binding(ns, "deliverable")]#, sa_binding(ns, "workload")],
                ))
     print("Resp:", resp, file=sys.stderr)
     return resp
