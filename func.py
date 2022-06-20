@@ -1,5 +1,6 @@
 from typing import Any
 from flask import Request
+import json
 import sys
 
 def reg_creds(namespace: str) -> dict[str, Any]:
@@ -34,13 +35,34 @@ def sa(namespace: str) -> dict[str, Any]:
             ],
            }
 
-def decorate_namespace(req: Request) -> dict[str,Any]:
+def sa_binding(namespace: str, role: str) -> dict[str, Any]:
+    return {"apiVersion": "rbac.authorization.k8s.io/v1",
+            "kind": "RoleBinding",
+            "metadata": {
+                "name": "default-permit-" + role,
+                "namespace": namespace,
+            },
+            "roleRef": {
+                "apiGroup": "rbac.authorization.k8s.io",
+                "kind": "ClusterRole",
+                "name": role,
+            },
+            "subjects": [
+                {"kind: ServiceAccount",
+                 "name: default",
+                },
+            ],
+           }
+
+def decorate_namespace(req: Request) -> str: # dict[str,Any]:
     data = req.get_json()
     print("Req:", data, file=sys.stderr)
     ns = data["object"]["metadata"]["name"]
-    return dict(labels={},
+    resp = json.dumps(dict(labels={},
                 annotations={},
                 status=None,
-                attachments=[reg_creds(ns),sa(ns)],
-               )
+                attachments=[reg_creds(ns), sa(ns), sa_binding(ns, "deliverable"), sa_binding(ns, "workload")],
+               ))
+    print("Resp:", resp, file=sys.stderr)
+    return resp
                 
