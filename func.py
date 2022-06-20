@@ -55,6 +55,11 @@ def sa_binding(namespace: str, role: str) -> dict[str, Any]:
            }
 
 def decorate_namespace(req: Request) -> str: # dict[str,Any]:
+    """Implementation the 'sync' metacontroller API.
+
+    See https://metacontroller.github.io/metacontroller/api/decoratorcontroller.html#sync-hook-request
+    for details.
+    """
     data = req.get_json()
     print("Req:", data, file=sys.stderr)
     ns = data["object"]["metadata"]["name"]
