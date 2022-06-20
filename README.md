@@ -25,7 +25,16 @@ Install this function using the
 The configuration in this repo suggests installing in the `tap-support`
 namespace using the function name `annotate-tap-dev-ns`, but you can customize
 both of these parameters. Note that you'll need to _manually_ provision this
-namespace to bootstrap the process.
+namespace to bootstrap the process. For example:
+
+```bash
+kubectl create secret generic git-ssh -n tap-support
+tanzu apps workload create annotate-tap-dev-ns \
+    --namespace tap-support \
+    --git-repo https://github.com/evankanderson/annotate-tanzu-dev-ns.git \
+    --git-branch main \
+    --type web
+```
 
 Once the function is running, apply the
 [`metacontroller.yaml`](./metacontroller.yaml) manifest, possibly customizing
